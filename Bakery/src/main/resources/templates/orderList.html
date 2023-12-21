@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: magenta;
+        }
+    </style>
+</head>
+<body style="background-color: lightorange">
+
+<h2>Order List</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Product Name</th>
+            <th>Product Quantity</th>
+            <th>Total Amount</th>
+            <th class="operations-column">Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Loop through the list of orders and display each order -->
+        <th:block th:each="order : ${orders}">
+            <tr>
+                <td th:text="${order.orderId}"></td>
+                <td th:text="${order.customerName}"></td>
+                <td th:text="${order.productName}"></td>
+                <td th:text="${order.productQuantity}"></td>
+                <td th:text="${order.totalAmount}"></td>
+                <td class="operations-column">
+                    <a th:href="@{'/updateOrderPage/' + ${order.orderId}}">Update</a>
+                    <form th:action="@{'/deleteOrder/' + ${order.orderId}}" method="post" style="display: inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+    </tbody>
+</table>
+<!-- Add Orders form at the bottom -->
+<form th:action="@{'/orderPage'}" method="get">
+    <button type="submit" class="add-orders-button">Add Orders</button>
+</form>
+
+</body>
+</html>
